@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "beater",
+  "version": "${version}",
+  "name": "Beater",
+  "description": "BoatORE wen",
+  "authors": [
+    "StackDoubleFlow"
+  ],
+  "contact": {
+    "homepage": "https://github.com/StackDoubleFlow/Beater2",
+    "issues": "https://github.com/StackDoubleFlow/Beater2/issues",
+    "sources": "https://github.com/StackDoubleFlow/Beater2"
+  },
+  "license": "MIT",
+  "icon": "assets/mod_name/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "net.stackdoubleflow.beater.Beater"
+      }
+    ]
+  },
+  "mixins": [
+    "beater.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.12",
+    "fabric": "*",
+    "fabric-language-kotlin": ">=1.7.1+kotlin.1.6.10",
+    "minecraft": "1.17.x",
+    "java": ">=17"
+  }
+}
