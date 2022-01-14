@@ -1,10 +1,10 @@
 package net.stackdoubleflow.beater
 
-import net.fabricmc.api.ModInitializer
+import net.fabricmc.api.ClientModInitializer
 
-object Beater: ModInitializer {
+object Beater: ClientModInitializer {
     private const val MOD_ID = "Beater"
-    override fun onInitialize() {
+    override fun onInitializeClient() {
         println("Example mod has been initialized.")
     }
 }
