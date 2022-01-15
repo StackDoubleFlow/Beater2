@@ -13,10 +13,9 @@ private const val DING_2 = -2_000_000_000
 private const val DING_3 = -1_000_000_000
 
 private const val PRE_PITCH = 1F // Note Block note 12
-private const val GO_PITCH = 1.58740105197F // Note Block note 20
+private const val GO_PITCH = 1.587401F // Note Block note 20
 
 class RunningRace(private val client: MinecraftClient, private val track: Track) {
-
     private val startTime = System.nanoTime() + 3_000_000_000
     private val player = client.player!!
     private val boat = player.vehicle
@@ -73,7 +72,7 @@ class RunningRace(private val client: MinecraftClient, private val track: Track)
         val timeElapsed = now - startTime
         val lastTimeElapsed = lastTickTime - startTime
         if (timeElapsed < 0) {
-            player.vehicle?.setPos(154.5, 86.0, -149.5)
+            player.vehicle?.setPosition(track.startPos)
             if (DING_1 in (lastTimeElapsed + 1) until timeElapsed) {
                 player.playSound(SoundEvents.BLOCK_NOTE_BLOCK_HARP, 3.0f, PRE_PITCH)
             } else if (DING_2 in (lastTimeElapsed + 1) until timeElapsed) {

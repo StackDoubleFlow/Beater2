@@ -4,15 +4,17 @@ import com.mojang.brigadier.CommandDispatcher
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.minecraft.client.MinecraftClient
 import net.minecraft.entity.EntityType
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.text.LiteralText
+import net.minecraft.util.math.Vec3d
 
 object Beater : ClientModInitializer {
     private const val MOD_ID = "Beater"
-    private val tracks = listOf(Track("overgrown"))
+    private val tracks = listOf(Track("overgrown", Vec3d(154.5, 86.0, -149.5)))
 
     private var runningRace: RunningRace? = null;
     private lateinit var client: MinecraftClient;

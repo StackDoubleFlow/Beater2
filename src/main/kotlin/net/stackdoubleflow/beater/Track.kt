@@ -1,3 +1,5 @@
 package net.stackdoubleflow.beater
 
-data class Track(val name: String)
+import net.minecraft.util.math.Vec3d
+
+data class Track(val name: String, val startPos: Vec3d)
