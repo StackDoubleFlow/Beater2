@@ -1,12 +1,10 @@
 package net.stackdoubleflow.beater
 
-import net.minecraft.block.NoteBlock
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
 import net.minecraft.text.LiteralText
 import kotlin.math.absoluteValue
-import kotlin.math.pow
 
 private const val DING_1 = -3_000_000_000
 private const val DING_2 = -2_000_000_000
@@ -48,14 +46,14 @@ class RunningRace(private val client: MinecraftClient, private val track: Track)
         val text = LiteralText(timeElapsedStr(timeElapsed))
 
         val renderer = client.textRenderer
-        val window = client.window;
+        val window = client.window
 
         val screenWidth = window.scaledWidth
         val textWidth = renderer.getWidth(text)
-        val x = screenWidth / 2 - textWidth / 2;
+        val x = screenWidth / 2 - textWidth / 2
 
         val screenHeight = window.scaledHeight
-        val y = screenHeight * 0.20f;
+        val y = screenHeight * 0.20f
 
         renderer.draw(matrixStack, text, x.toFloat(), y, 0xFFFFFF)
     }
