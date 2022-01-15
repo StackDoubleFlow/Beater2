@@ -30,13 +30,18 @@ object Beater : ClientModInitializer {
             val track = tracks[0];
 
             runningRace = RunningRace(client, tracks[0])
-            ctx.source.sendFeedback(LiteralText("Started race on track ${track.name}"), false)
+            ctx.source.sendFeedback(LiteralText("Started race on track \"${track.name}\""), false)
             1
         }))
         dispatcher.register(CommandManager.literal("race").then(CommandManager.literal("cancel").executes { ctx ->
-            runningRace = null
+            stopRace()
+            ctx.source.sendFeedback(LiteralText("Cancelled race"), false)
             1
         }))
+    }
+
+    fun stopRace() {
+        runningRace = null
     }
 
     override fun onInitializeClient() {
