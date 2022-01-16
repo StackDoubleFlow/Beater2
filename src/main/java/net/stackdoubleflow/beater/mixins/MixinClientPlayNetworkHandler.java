@@ -28,7 +28,6 @@ public class MixinClientPlayNetworkHandler {
                 GameProfile profile,
                 CallbackInfo ci
     ) {
-        System.out.println("mixin ran");
         Beater.INSTANCE.registerCommands((CommandDispatcher<ServerCommandSource>) (Object) commandDispatcher);
     }
 
