@@ -14,7 +14,7 @@ import net.minecraft.util.math.Vec2f
 import net.minecraft.util.math.Vec3d
 
 object Beater : ClientModInitializer {
-    private val tracks = mapOf(
+    val tracks = mapOf(
         "overgrown" to Track(
             Vec3d(180.5, 70.0, -123.5),
             listOf(
@@ -34,16 +34,13 @@ object Beater : ClientModInitializer {
             CommandManager.literal("race")
                 .then(
                     CommandManager.literal("start")
-                        .then(CommandManager.argument("track_name", StringArgumentType.word()).executes { ctx ->
+                        .then(CommandManager.argument("track_name", TrackArgumentType()).executes { ctx ->
                             if (runningRace != null) {
                                 sendError(LiteralText("There is already a race running"))
                                 return@executes 1
                             }
-                            if (client.player?.vehicle?.type != EntityType.BOAT) {
-                                sendError(LiteralText("You are not in a boat"))
-                                return@executes 1
-                            }
-                            val trackName = StringArgumentType.getString(ctx, "track_name")
+
+                            val trackName = TrackArgumentType.getTrack(ctx, "track_name")
                             val track = tracks[trackName]
                             if (track == null) {
                                 sendError(LiteralText("Could not find track"))
@@ -52,6 +49,11 @@ object Beater : ClientModInitializer {
 
                             if (track.startPos.distanceTo(client.player!!.pos) > 5) {
                                 sendError(LiteralText("Please move closer to the track starting position"))
+                            }
+
+                            if (client.player?.vehicle?.type != EntityType.BOAT) {
+                                sendError(LiteralText("You are not in a boat"))
+                                return@executes 1
                             }
 
                             runningRace = RunningRace(client, track)
