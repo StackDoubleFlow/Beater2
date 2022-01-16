@@ -4,6 +4,8 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.sound.SoundEvents
 import net.minecraft.text.LiteralText
+import net.minecraft.util.Formatting
+import net.minecraft.util.math.Vec2f
 import kotlin.math.absoluteValue
 
 private const val DING_1 = -3_000_000_000
@@ -16,8 +18,11 @@ private const val GO_PITCH = 1.587401F // Note Block note 20
 class RunningRace(private val client: MinecraftClient, private val track: Track) {
     private val startTime = System.nanoTime() + 3_000_000_000
     private val player = client.player!!
-    private val boat = player.vehicle
+    private val boat = player.vehicle!!
+
     private var lastTickTime = 0L
+    private var lastPos = boat.pos
+    private var curCheckpoint = 0
 
     private fun timeElapsedStr(timeElapsed: Long): String {
         val neg = timeElapsed < 0
@@ -70,7 +75,7 @@ class RunningRace(private val client: MinecraftClient, private val track: Track)
         val timeElapsed = now - startTime
         val lastTimeElapsed = lastTickTime - startTime
         if (timeElapsed < 0) {
-            player.vehicle?.setPosition(track.startPos)
+            boat.setPosition(track.startPos)
             if (DING_1 in (lastTimeElapsed + 1) until timeElapsed) {
                 player.playSound(SoundEvents.BLOCK_NOTE_BLOCK_HARP, 3.0f, PRE_PITCH)
             } else if (DING_2 in (lastTimeElapsed + 1) until timeElapsed) {
@@ -83,6 +88,28 @@ class RunningRace(private val client: MinecraftClient, private val track: Track)
             player.playSound(SoundEvents.BLOCK_NOTE_BLOCK_HARP, 3.0f, GO_PITCH)
         }
 
+        val pos = boat.pos
+        val moveLine = Line(Vec2f(lastPos.x.toFloat(), lastPos.z.toFloat()), Vec2f(pos.x.toFloat(), pos.z.toFloat()))
+
+        if (curCheckpoint != track.checkpoints.size) {
+            val nextCheckpoint = track.checkpoints[curCheckpoint]
+            if (moveLine.intersects(nextCheckpoint)) {
+                sendFeedback(
+                    LiteralText("Reached checkpoint ${curCheckpoint + 1} in ${timeElapsedStr(timeElapsed)}").formatted(
+                        Formatting.GOLD
+                    )
+                )
+                curCheckpoint += 1
+            }
+        } else if (moveLine.intersects(track.endLine)) {
+            sendFeedback(LiteralText("Completed track in ${timeElapsedStr(timeElapsed)}").formatted(Formatting.GREEN))
+            Beater.stopRace()
+            return
+        }
+
+
+
+        lastPos = boat.pos
         lastTickTime = now
     }
 }
