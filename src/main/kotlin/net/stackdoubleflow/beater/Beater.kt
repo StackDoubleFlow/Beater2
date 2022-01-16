@@ -16,12 +16,12 @@ import net.minecraft.util.math.Vec3d
 object Beater : ClientModInitializer {
     val tracks = mapOf(
         "overgrown" to Track(
-            Vec3d(-248.5, 65.0, -106.5),
+            Vec3d(-248.5, 65.0, 106.5),
             listOf(
-                Line(Vec2f(-2f, -165f), Vec2f(-12f, -165f)),
-                Line(Vec2f(175f, -170f), Vec2f(175f, -160f))
+                Line(Vec2f(-2f, 165f), Vec2f(-12f, 165f)),
+                Line(Vec2f(-175f, 170f), Vec2f(-175f, 160f))
             ),
-            Line(Vec2f(-252f, -106f), Vec2f(-244f, -106f))
+            Line(Vec2f(-252f, 106f), Vec2f(-244f, 106f))
         )
     )
 
