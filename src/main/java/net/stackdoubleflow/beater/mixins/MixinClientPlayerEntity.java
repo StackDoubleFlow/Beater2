@@ -19,7 +19,7 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity {
 
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     private void onSendChatMessage(String message, CallbackInfo ci) {
-        if (message.startsWith("/race")) {
+        if (message.startsWith("/race ")) {
             StringReader reader = new StringReader(message);
             reader.skip();
             ClientCommandManagerKt.executeCommand(reader, message);
