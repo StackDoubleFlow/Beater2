@@ -76,6 +76,7 @@ class RunningRace(private val client: MinecraftClient, private val track: Track)
         val lastTimeElapsed = lastTickTime - startTime
         if (timeElapsed < 0) {
             boat.setPosition(track.startPos)
+            boat.setVelocity(0.0, 0.0, 0.0)
             if (DING_1 in (lastTimeElapsed + 1) until timeElapsed) {
                 player.playSound(SoundEvents.BLOCK_NOTE_BLOCK_HARP, 3.0f, PRE_PITCH)
             } else if (DING_2 in (lastTimeElapsed + 1) until timeElapsed) {
@@ -106,8 +107,6 @@ class RunningRace(private val client: MinecraftClient, private val track: Track)
             Beater.stopRace()
             return
         }
-
-
 
         lastPos = boat.pos
         lastTickTime = now
