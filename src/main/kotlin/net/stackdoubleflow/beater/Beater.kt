@@ -49,6 +49,7 @@ object Beater : ClientModInitializer {
 
                             if (track.startPos.distanceTo(client.player!!.pos) > 5) {
                                 sendError(LiteralText("Please move closer to the track starting position"))
+                                return@executes 1
                             }
 
                             if (client.player?.vehicle?.type != EntityType.BOAT) {
